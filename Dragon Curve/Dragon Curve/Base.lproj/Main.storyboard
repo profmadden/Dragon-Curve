@@ -37,6 +37,22 @@
                                             <action selector="deltaDisplay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IL8-Ve-1pE"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Cc-hg-pLQ">
+                                        <rect key="frame" x="103" y="0.0" width="51" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Dragon"/>
+                                        <connections>
+                                            <action selector="selectCurve:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NgQ-yz-XtJ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJj-ue-3zK">
+                                        <rect key="frame" x="180" y="0.0" width="35" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Koch"/>
+                                        <connections>
+                                            <action selector="selectCurve:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lab-Oz-Mg4"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>

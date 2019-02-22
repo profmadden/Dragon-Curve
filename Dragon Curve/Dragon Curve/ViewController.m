@@ -15,15 +15,39 @@
 @implementation ViewController
 @synthesize curveView, sequence;
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+-(Sequence *)dragonCurve
+{
     sequence = [[Sequence alloc] init];
     [sequence addStep:45 distance:1 mirror:1 reverse:0 visible:1];
     [sequence addStep:-90 distance:1 mirror:-1 reverse:0 visible:1];
     float length = [sequence computeLength];
     NSLog(@"Length is %f", length);
     [sequence setSequence_scale:1.0/length];
+    
+    return sequence;
+}
+
+
+-(Sequence *)kochCurve
+{
+    sequence = [[Sequence alloc] init];
+    [sequence addStep:0 distance:1 mirror:1 reverse:0 visible:1];
+    [sequence addStep:60 distance:1 mirror:1 reverse:0 visible:1];
+    [sequence addStep:-120 distance:1 mirror:1 reverse:0 visible:1];
+    [sequence addStep:60 distance:1 mirror:1 reverse:0 visible:1];
+
+    float length = [sequence computeLength];
+    NSLog(@"Length is %f", length);
+    [sequence setSequence_scale:1.0/length];
+    
+    return sequence;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view, typically from a nib.
+
+    sequence = [self kochCurve];
     
     [curveView setSequence:sequence];
     [curveView setNeedsDisplay];
@@ -34,6 +58,20 @@
     int displayDepth = [curveView displayDepth];
     displayDepth += (int)[sender tag];
     [curveView setDisplayDepth:displayDepth];
+    [curveView setNeedsDisplay];
+}
+
+-(IBAction)selectCurve:(id)sender
+{
+    switch ((int)[sender tag])
+    {
+        case 0:
+            sequence = [self dragonCurve];
+            break;
+        default:
+            sequence = [self kochCurve];
+    }
+    [curveView setSequence:sequence];
     [curveView setNeedsDisplay];
 }
 
