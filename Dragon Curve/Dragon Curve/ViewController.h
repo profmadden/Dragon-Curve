@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CurveView.h"
+#import "Sequence.h"
 @interface ViewController : UIViewController
+
+@property (nonatomic, strong) IBOutlet CurveView *curveView;
+@property (nonatomic, strong) Sequence *sequence;
 
 
 @end

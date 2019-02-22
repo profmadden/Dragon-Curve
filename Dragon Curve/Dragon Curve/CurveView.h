@@ -12,6 +12,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CurveView : UIView
+@property (nonatomic) int displayDepth;
+@property (nonatomic, strong) Sequence *sequence;
 
 @end
 

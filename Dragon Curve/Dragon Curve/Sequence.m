@@ -37,9 +37,6 @@
     [steps addObject:s];
 }
 
-#define DCOS(a) (cos(a*M_PI/180.0))
-#define DSIN(a) (sin(a*M_PI/180.0))
-
 -(float)computeLength
 {
     float x, y;
