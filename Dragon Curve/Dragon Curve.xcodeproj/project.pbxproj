@@ -37,6 +37,7 @@
 		74F3680C221F80A000641750 /* SequenceStep.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SequenceStep.h; sourceTree = "<group>"; };
 		74F3680D221F80A000641750 /* SequenceStep.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SequenceStep.m; sourceTree = "<group>"; };
 		74F3680F221F87DC00641750 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		74F368112221AA1900641750 /* development-notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "development-notes.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				74F3680F221F87DC00641750 /* README.md */,
+				74F368112221AA1900641750 /* development-notes.md */,
 				74F367EF221F7FD500641750 /* Dragon Curve */,
 				74F367EE221F7FD500641750 /* Products */,
 			);

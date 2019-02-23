@@ -46,10 +46,35 @@
     for (SequenceStep *s in steps)
     {
         angle += [s angle];
-        x += DCOS(angle);
-        y += DSIN(angle);
+        x += DCOS(angle) * [s distance];
+        y += DSIN(angle) * [s distance];
     }
+    float compensate;
     
+    NSLog(@"X %f Y %f", x, y);
+    if (x == 0)
+    {
+        if (y > 0)
+            compensate = -M_PI/2;
+        else
+            compensate = M_PI/2;
+    }
+    else
+    {
+        if (y == 0)
+        {
+            if (x > 0)
+                compensate = 0;
+            else
+                compensate = -M_PI;
+        }
+        else
+        {
+            compensate = atan(y/x);
+        }
+    }
+    NSLog(@"Compensate %f  -- %f", compensate, compensate * 180.0/M_PI);
+    initial_angle = -(compensate * 180.0/M_PI);
     return sqrt(x * x + y * y);
 }
 

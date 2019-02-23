@@ -11,6 +11,18 @@
 @implementation CurveView
 @synthesize sequence;
 @synthesize displayDepth;
+@synthesize offsetx, offsety, imageScale;
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self)
+    {
+        offsetx = offsety = 0;
+        imageScale = 1;
+    }
+    return self;
+}
 
 -(void)recurseDraw:(CGContextRef)context depth:(int)depth x:(float)x y:(float) y angle:(float)angle scale:(float)scale mirror:(int)mirror reverse:(int) reverse
 {
@@ -20,6 +32,7 @@
         indent[i] = ' ';
     indent[depth] = '\0';
     CGPoint points[2];
+    NSLog(@"Depth %d incoming angle %f", depth, angle * M_PI/180.0);
     
     for (SequenceStep *s in [sequence steps])
     {
@@ -30,17 +43,24 @@
         x += DCOS(angle) * [s distance] * scale;
         y += DSIN(angle) * [s distance] * scale;
         // NSLog(@"%s     %f %f angle %f", indent, x, y, angle);
+        points[0].x = px;
+        points[0].y = py;
+        points[1].x = x;
+        points[1].y = y;
+
         if (depth == 1)
         {
-            points[0].x = px;
-            points[0].y = py;
-            points[1].x = x;
-            points[1].y = y;
+            [[UIColor blueColor] setStroke];
             CGContextStrokeLineSegments(context, points, 2);
         }
         else
         {
-            [self recurseDraw:context depth:depth - 1 x:px y:py angle:angle scale:scale*[sequence sequence_scale] mirror:[s mirror] reverse:reverse*[s reverse]];
+            if (depth == 2)
+            {
+                [[UIColor redColor] setStroke];
+                CGContextStrokeLineSegments(context, points, 2);
+            }
+            [self recurseDraw:context depth:depth - 1 x:px y:py angle:angle + [sequence initial_angle] scale:scale*[sequence sequence_scale]*[s distance] mirror:[s mirror] reverse:reverse*[s reverse]];
         }
         
     }
@@ -77,6 +97,10 @@
     x = r.size.width / 3;
     y = r.size.height / 2;
     
+    x -= offsetx;
+    y -= offsety;
+    scale = scale * imageScale;
+    
     [[UIColor blueColor] setStroke];
     if (displayDepth <= 1)
         displayDepth = 1;
@@ -85,5 +109,44 @@
     [self recurseDraw:context depth:displayDepth x:x y:y angle:0 scale:scale mirror:1 reverse:0];
 }
 
+CGPoint startTouch;
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    for (UITouch *t in touches)
+    {
+        startTouch = [t locationInView:self];
+    }
+}
+
+-(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    for (UITouch *t in touches)
+    {
+        CGPoint here = [t locationInView:self];
+        
+        offsetx += startTouch.x - here.x;
+        offsety += startTouch.y - here.y;
+        
+        startTouch = here;
+    }
+    [self setNeedsDisplay];
+}
+
+-(IBAction)zoom:(id)sender
+{
+    if ([sender tag] > 0)
+        imageScale *= 1.2;
+    else
+        imageScale = imageScale/1.2;
+    [self setNeedsDisplay];
+}
+
+-(IBAction)reset:(id)sender
+{
+    imageScale = 1;
+    offsetx = offsety = 0;
+    [self setNeedsDisplay];
+}
 
 @end
